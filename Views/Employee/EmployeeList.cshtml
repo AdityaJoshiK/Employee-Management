@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "EmployeeList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data
+@model DataTable
+
+<table id="myTable" class="table display table-responsive table-sm">
+    <thead>
+        <tr>
+            <th>Employee ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Designation ID</th>
+            <th>Department ID</th>
+            <th>Salary</th>
+            <th>Joining Date</th>
+            <th>Reporting Person ID</th>
+            <th>Creation Date</th>
+            <th>Modification Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="sample_2">
+        @foreach (DataRow dr in Model.Rows)
+        {
+            <tr>
+                <td>@dr["EmployeeID"]</td>
+                <td>@dr["FirstName"]</td>
+                <td>@dr["LastName"]</td>
+                <td>@dr["DesignationID"]</td>
+                <td>@dr["DepartmentID"]</td>
+                <td>@dr["Salary"]</td>
+                <td>@Convert.ToDateTime(dr["JoiningDate"]).ToShortDateString()</td>
+                <td>@dr["ReportingPersonID"]</td>
+                <td>@Convert.ToDateTime(dr["CreationDate"]).ToShortDateString()</td>
+                <td>@Convert.ToDateTime(dr["ModificationDate"]).ToShortDateString()</td>
+                <td>
+                    <form method="post">
+                        <input type="hidden" name="EmployeeID" value="@Convert.ToInt32(dr["EmployeeID"])" />
+                        <button class="btn btn-danger" type="submit" asp-controller="Employee" asp-action="Delete">Delete</button>
+                        <button class="btn btn-success" type="submit" asp-controller="Employee" asp-action="Edit">Edit</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
